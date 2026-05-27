@@ -14,8 +14,8 @@
   --text-primary: #f0f4ff;
   --text-secondary: #8ba3c7;
   --text-muted: #4d6080;
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
+  --font-display: 'Times New Roman', Times, serif;
+  --font-body: 'Times New Roman', Times, serif;
   --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
   --shadow-glow: 0 0 40px rgba(79, 179, 255, 0.08);
   --radius: 12px;
