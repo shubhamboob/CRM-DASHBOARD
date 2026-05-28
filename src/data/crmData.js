@@ -154,7 +154,7 @@ export const trendData = monthKeys.map(m => ({
 export const rmTagging = {
   "Pratab":   ["RAGHAV Paradise", "RAGHAV Parijat"],
   "Priyanka": ["RAGHAV Vista",    "RAGHAV Avenue"],
-  "Siddhesh": ["RAGHAV Ananta"],
+  "Siddhesh": ["RAGHAV Ananta", "RAGHAV Enclave"],
   "Snigdha":  ["RAGHAV Utopia"],
 };
 
