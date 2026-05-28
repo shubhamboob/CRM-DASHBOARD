@@ -149,3 +149,80 @@ export const trendData = monthKeys.map(m => ({
   outstanding: monthsData[m].total.outstanding,
   pending_reg: monthsData[m].total.pending_reg,
 }));
+
+// ─── RM Tagging ───────────────────────────────────────────────────────────────
+export const rmTagging = {
+  "Pratab":   ["RAGHAV Paradise", "RAGHAV Parijat"],
+  "Priyanka": ["RAGHAV Vista",    "RAGHAV Avenue"],
+  "Siddhesh": ["RAGHAV Ananta"],
+  "Snigdha":  ["RAGHAV Utopia"],
+};
+
+export const rmColors = {
+  "Pratab":   "#4fb3ff",
+  "Priyanka": "#a78bfa",
+  "Siddhesh": "#22c55e",
+  "Snigdha":  "#fb7185",
+};
+
+// Helper: compute RM-level aggregated data for a given month
+export function getRMData(monthKey) {
+  const d = monthsData[monthKey];
+  const rmNames = Object.keys(rmTagging);
+
+  return rmNames.map(rm => {
+    const assigned = rmTagging[rm];
+
+    const projRows = d.projects.filter(p =>
+      assigned.some(a => a.toLowerCase() === p.name.toLowerCase())
+    );
+    const tvaRows = d.project_tva.filter(p =>
+      assigned.some(a => a.toLowerCase().includes(p.name.toLowerCase()))
+    );
+
+    const sum = (arr, key) => Math.round(arr.reduce((s, p) => s + (p[key] || 0), 0) * 100) / 100;
+
+    const live_bookings        = projRows.reduce((s, p) => s + p.live_bookings, 0);
+    const monthly_collection   = sum(projRows, "monthly_collection");
+    const daily_collection     = sum(projRows, "daily_collection");
+    const demand_raised        = sum(projRows, "demand_raised");
+    const collection_till_date = sum(projRows, "collection_till_date");
+    const outstanding          = sum(projRows, "outstanding");
+    const pending_reg          = projRows.reduce((s, p) => s + p.pending_reg, 0);
+    const pending_reg_45d      = projRows.reduce((s, p) => s + p.pending_reg_45d, 0);
+    const monthly_registrations= projRows.reduce((s, p) => s + p.monthly_registrations, 0);
+    const reg_targets          = projRows.reduce((s, p) => s + p.reg_targets, 0);
+
+    const target      = sum(tvaRows, "target");
+    const achievement = sum(tvaRows, "achievement");
+    const forecast    = sum(tvaRows, "forecast");
+    const achievement_pct = target > 0 ? Math.round((achievement / target) * 1000) / 10 : 0;
+    const collection_eff  = demand_raised > 0 ? Math.round((collection_till_date / demand_raised) * 1000) / 10 : 0;
+
+    // 3-month trend for this RM
+    const trend = monthKeys.map(mk => {
+      const md = monthsData[mk];
+      const pr = md.projects.filter(p => assigned.some(a => a.toLowerCase() === p.name.toLowerCase()));
+      const tr = md.project_tva.filter(p => assigned.some(a => a.toLowerCase().includes(p.name.toLowerCase())));
+      return {
+        month: mk.replace(" 2026", ""),
+        monthly_collection: sum(pr, "monthly_collection"),
+        outstanding: sum(pr, "outstanding"),
+        target: sum(tr, "target"),
+        achievement: sum(tr, "achievement"),
+        forecast: sum(tr, "forecast"),
+      };
+    });
+
+    return {
+      rm, assigned,
+      live_bookings, monthly_collection, daily_collection,
+      demand_raised, collection_till_date, outstanding,
+      pending_reg, pending_reg_45d, monthly_registrations, reg_targets,
+      target, achievement, forecast, achievement_pct, collection_eff,
+      projects: projRows,
+      tva: tvaRows,
+      trend,
+    };
+  });
+}

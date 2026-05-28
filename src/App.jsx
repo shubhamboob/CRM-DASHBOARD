@@ -3,8 +3,9 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   LineChart, Line, AreaChart, Area
 } from "recharts";
-import { monthsData, monthKeys, projectColors, trendData } from "./data/crmData";
-import { Bot, Send, X, ChevronDown, TrendingUp, TrendingDown, IndianRupee, Building2, FileCheck, AlertCircle, BarChart2, Layers, MessageSquare, Lock, Eye, EyeOff, LogOut } from "lucide-react";
+import { monthsData, monthKeys, projectColors, trendData, rmColors, getRMData } from "./data/crmData";
+import RMPerformanceTab from "./components/RMPerformanceTab";
+import { Bot, Send, X, ChevronDown, TrendingUp, TrendingDown, IndianRupee, Building2, FileCheck, AlertCircle, BarChart2, Layers, MessageSquare, Lock, Eye, EyeOff, LogOut, Users } from "lucide-react";
 
 // ─── Auth Config ──────────────────────────────────────────────────────────────
 const VALID_USERS = [
@@ -356,6 +357,7 @@ export default function App() {
     { id: "projects", label: "Projects", icon: Building2 },
     { id: "targets", label: "Target vs Achievement", icon: Layers },
     { id: "trends", label: "Trends", icon: TrendingUp },
+    { id: "rm", label: "RM Performance", icon: Users },
   ];
 
   return (
@@ -694,6 +696,9 @@ export default function App() {
             </div>
           </>
         )}
+
+        {/* ── RM PERFORMANCE ── */}
+        {activeTab === "rm" && <RMPerformanceTab data={data} monthKey={selectedMonth} />}
       </main>
 
       {/* AI Chat Button */}
