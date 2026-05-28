@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   LineChart, Line, AreaChart, Area
 } from "recharts";
 import { monthsData, monthKeys, projectColors, trendData, rmColors, getRMData } from "./data/crmData";
@@ -457,7 +457,7 @@ export default function App() {
                     <YAxis tick={{ fontSize: 10, fill: "var(--text-muted)", fontFamily: "Times New Roman" }} />
                     <Tooltip content={<CustomTooltip />} />
                     <Bar dataKey="monthly_collection" name="Collection" radius={[4,4,0,0]}>
-                      {data.projects.map((p, i) => <cell key={i} fill={projectColors[p.name] || "var(--accent-blue)"} fillOpacity={0.85} />)}
+                      {data.projects.map((p, i) => <Cell key={i} fill={projectColors[p.name] || "var(--accent-blue)"} fillOpacity={0.85} />)}
                     </Bar>
                   </BarChart>
                 </ResponsiveContainer>

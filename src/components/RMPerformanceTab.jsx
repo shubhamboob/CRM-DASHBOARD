@@ -1,11 +1,10 @@
 import { useState } from "react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-  ResponsiveContainer, LineChart, Line, RadarChart, Radar,
-  PolarGrid, PolarAngleAxis, PolarRadiusAxis
+  ResponsiveContainer, LineChart, Line
 } from "recharts";
 import { getRMData, rmColors, monthKeys } from "../data/crmData";
-import { TrendingUp, TrendingDown, AlertCircle, Building2, FileCheck, IndianRupee } from "lucide-react";
+import { TrendingUp, AlertCircle, Building2, FileCheck, IndianRupee, Users } from "lucide-react";
 
 const cr  = v => `₹${Number(v).toFixed(2)} Cr`;
 const pct = v => `${Number(v).toFixed(1)}%`;
